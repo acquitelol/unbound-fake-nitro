@@ -33,7 +33,7 @@ export default () => {
     const settings = useSettingsStore(manifest.name);
     const [query, controls] = AdvancedSearch.useAdvancedSearch(searchContext);
 
-    return <ScrollView>
+    return <View>
         <View style={styles.navigation}>
             <View style={styles.shadow}>
                 <AdvancedSearch 
@@ -63,7 +63,8 @@ export default () => {
                 </View>
             </View>
         </View>
-        <View style={styles.section}>
+        <ScrollView style={styles.section}>
+            <View style={{ marginTop: -20 }} />
             {Object.entries(sections).map(([title, { icon, patches }]) => (
                 <ToggleableSection
                     key={title}
@@ -81,7 +82,11 @@ export default () => {
                         <TableSwitchRow 
                             label={title}
                             subLabel={subtitle}
-                            icon={<TableRowIcon source={getIDByName(icon)} />}
+                            icon={<TableRowIcon 
+                                source={typeof icon === "string" 
+                                    ? getIDByName(icon) 
+                                    : icon} 
+                            />}
                             value={get(`${key}.enabled`)}
                             onValueChange={(value) => {
                                 settings.set(`${key}.enabled`, JSON.parse(value))
@@ -98,7 +103,7 @@ export default () => {
                     </>))}
                 </ToggleableSection>
             ))}
-        </View>
+        </ScrollView>
         <View style={styles.space} />
-    </ScrollView>
+    </View>
 };

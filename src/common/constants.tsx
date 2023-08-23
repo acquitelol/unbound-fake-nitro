@@ -2,6 +2,9 @@ import { React, TouchableOpacity, View, configureNext, create, getIDByName, metr
 import { get } from "./store";
 import manifest from '../../dist/manifest.json';
 
+import type { ReactNode } from 'react';
+import type { ViewStyle } from 'react-native'
+
 const {
     common: {
         StyleSheet,
@@ -12,11 +15,14 @@ const {
     }
 } = metro;
 
-export const styles = StyleSheet.createThemedStyleSheet({
+const createStyleSheet = <T extends Record<string, ViewStyle>>(obj: T): T => {
+    return StyleSheet.createThemedStyleSheet(obj);
+}
+
+export const styles = createStyleSheet({
     navigation: {
         paddingHorizontal: 16,
         paddingBottom: 16,
-        marginBottom: -20,
         backgroundColor: Theme.unsafe_rawColors.PRIMARY_800
     },
 
@@ -40,7 +46,8 @@ export const styles = StyleSheet.createThemedStyleSheet({
         },
         shadowOpacity: 0.15,
         shadowRadius: 4.65,
-        elevation: 8
+        elevation: 8,
+        height: "100%"
     },
 
     sectionIcon: {
@@ -69,7 +76,15 @@ export const buttons = [
     }
 ]
 
-export const ToggleableSection = ({ title, icon, patches, children, style, ...rest }: any) => {
+type SectionProps = { 
+    title: string, 
+    icon: ReactNode, 
+    patches: Record<string, any>, 
+    children: ReactNode, 
+    style?: ViewStyle;
+}
+
+export const ToggleableSection = ({ title, icon, patches, children, style, ...rest }: SectionProps & Record<string, any>) => {
     const [hidden, setHidden] = React.useState(get(`${title}.hidden`, false));
     const disabled = Object.keys(patches).every(key => !get(`${key}.enabled`));
     const settings = useSettingsStore(manifest.name);
@@ -80,7 +95,7 @@ export const ToggleableSection = ({ title, icon, patches, children, style, ...re
 
     return <Forms.FormSection
         title={title}
-        style={utilities.mergeStyles(style, { opacity: disabled ? 0.5 : 1 })}
+        style={[style, { opacity: disabled ? 0.5 : 1 }]}
         icon={<View style={{ flexDirection: "row" }}>
             {icon}
             <TouchableOpacity

@@ -15,6 +15,9 @@ export const {
     }
 } = window["unbound"];
 
+export const ReactNative: typeof import('react-native') = window["ReactNative"]
+export const React: typeof import('react') = window["React"];
+
 export const {
     ScrollView,
     TouchableOpacity, 
@@ -22,6 +25,6 @@ export const {
     LayoutAnimation: { 
         create, 
         configureNext 
-    }
-} = window["ReactNative"];
-export const React = window["React"];
+    },
+    FlatList
+} = ReactNative;
