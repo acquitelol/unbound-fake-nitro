@@ -47,7 +47,7 @@ export default class extends Patch {
     static colorExpression = /\[(\#[0-9a-fA-F]{6})\s*,\s*(\#[0-9a-fA-F]{6})\]/;
     static replacingExpression = new RegExp(this.colorExpression, 'g');
 
-    // Taken and adapted from https://github.com/twnlink/vendetta-plugins/blob/master/plugins/FreeProfileColors
+    // Taken and adapted from https://synthetic.garden/3y3.htm
     static is3y3(text: string) {
         return Boolean([...text]
             .some((x) => 0xe0000 < x.codePointAt(0)! && x.codePointAt(0)! < 0xe007f));

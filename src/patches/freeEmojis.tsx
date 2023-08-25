@@ -53,8 +53,16 @@ export default class extends Patch {
     }
     
     static override patch(Patcher) {
-        Patcher.instead(Permission, 'canUseEmojisEverywhere', () => true);
-        Patcher.instead(Permission, 'canUseAnimatedEmojis', () => true);
+        const insteadPatch = (prop: string) => {
+            Patcher.instead(Permission, prop, (self, args, orig) => {
+                if (get(`${this.key}.enabled`)) return orig.apply(self, args);
+        
+                return true
+            })
+        }
+
+        insteadPatch('canUseEmojisEverywhere');
+        insteadPatch('canUseAnimatedEmojis');
 
         Patcher.before(Messages, 'sendMessage', (_, [, message]: [string, Message]) => this.parseEmojis(message));
         Patcher.before(Uploading, 'uploadLocalFiles', (_, [{ parsedMessage }]: [{ parsedMessage: Message }]) => this.parseEmojis(parsedMessage));

@@ -22,13 +22,18 @@ export default class extends Patch {
     }
     
     static override patch(Patcher) {
-        Patcher.instead(Permission, 'canUseStickersEverywhere', () => true);
+        Patcher.instead(Permission, 'canUseStickersEverywhere', (self, args, orig) => {
+            if (get(`${this.key}.enabled`)) return orig.apply(self, args);
+
+            return true;
+        });
 
         Patcher.instead(Messages, "sendStickers", (self, args, orig) => {
             const [ channelId, stickerIds, _, extra ] = args;
             
             const stickers = stickerIds.map(stickerId => StickerStore.getStickerById(stickerId));
             const invalidStickers = stickers.filter(sticker => !this.canUseSticker(sticker, channelId));
+
             if (invalidStickers.length < 1) return orig.apply(self, args);
       
             const content = invalidStickers.map(sticker => this.getStickerUrl(sticker.id)).join("\n");
