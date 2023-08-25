@@ -1,18 +1,20 @@
-import freeEmojis from "./freeEmojis";
+import freeEmojis from './freeEmojis';
+
+import profileThemes from './profileThemes';
+import customBanner from './customBanner';
 
 /**
  * TO-DO
 
     ~ chat
-        - custom emojis
+        - custom emojis - done
         - custom stickers
         - convert emoji links into real emojis client side
         - split large messages
 
     ~ profiles
-        - 3y3 custom profile colors
-        - usrbg custom banner
-        - decor custom avatar decoration
+        - 3y3 custom profile colors - done
+        - usrbg custom banner - done
 
     ~ client
         - hide upsells in places throughout the client (get nitro button etc)
@@ -22,9 +24,16 @@ import freeEmojis from "./freeEmojis";
  */
 export const sections = {
     client: {
-        icon: "img_nitro_star",
+        icon: 'img_nitro_star',
         patches: {
             freeEmojis
+        }
+    },
+    profile: {
+        icon: 'ic_profile_24px',
+        patches: {
+            profileThemes,
+            customBanner
         }
     }
 };

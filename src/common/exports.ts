@@ -13,10 +13,10 @@ export const {
     patcher: {
         createPatcher
     }
-} = window["unbound"];
+} = window['unbound'];
 
-export const ReactNative: typeof import('react-native') = window["ReactNative"]
-export const React: typeof import('react') = window["React"];
+export const ReactNative: typeof import('react-native') = window['ReactNative']
+export const React: typeof import('react') = window['React'];
 
 export const {
     ScrollView,

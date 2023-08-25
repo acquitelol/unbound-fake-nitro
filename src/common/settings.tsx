@@ -1,5 +1,5 @@
-import { get, setAll } from "./store";
-import { sections } from "../patches";
+import { get, setAll } from './store';
+import { sections } from '../patches';
 import {
     React,
     ScrollView,
@@ -11,8 +11,8 @@ import {
     useSettingsStore,
     utilities,
     components
-} from "./exports";
-import { ToggleableSection, buttons, styles } from "./constants";
+} from './exports';
+import { ToggleableSection, buttons, styles } from './constants';
 import manifest from '../../dist/manifest.json';
 
 const {
@@ -27,7 +27,7 @@ const {
 } = metro;
 
 const { AdvancedSearch } = components;
-const searchContext = { type: "FAKE_NITRO" };
+const searchContext = { type: 'FAKE_NITRO' };
 
 export default () => {
     const settings = useSettingsStore(manifest.name);
@@ -42,7 +42,7 @@ export default () => {
                 />
             </View>
             <View style={styles.shadow}>
-                <View style={{ flexDirection: "row" }}>
+                <View style={{ flexDirection: 'row' }}>
                     {buttons.map(({ title, value }, _, { length }) => {
                         return <Button
                             color={Button.Colors.BRAND}
@@ -50,7 +50,7 @@ export default () => {
                             size={Button.Sizes.MEDIUM}
                             onPress={() => {
                                 setAll(settings, sections, value);
-                                configureNext(create(300, "keyboard"))
+                                configureNext(create(300, 'keyboard'))
                             }}
                             style={{ 
                                 marginTop: 16,
@@ -83,14 +83,14 @@ export default () => {
                             label={title}
                             subLabel={subtitle}
                             icon={<TableRowIcon 
-                                source={typeof icon === "string" 
+                                source={typeof icon === 'string' 
                                     ? getIDByName(icon) 
                                     : icon} 
                             />}
                             value={get(`${key}.enabled`)}
                             onValueChange={(value) => {
                                 settings.set(`${key}.enabled`, JSON.parse(value))
-                                configureNext(create(300, "keyboard"))
+                                configureNext(create(300, 'keyboard'))
                             }}
                             disabled={!get(`${key}.enabled`)}
                             start={index === 0}
