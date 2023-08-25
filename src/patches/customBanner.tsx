@@ -23,7 +23,7 @@ type Banner = {
 export default class self extends Patch {
     static override key = 'customBanner';
     static override title = 'Custom Banner';
-    static override subtitle = 'Uses the UserBG API to display custom banners. Request your own at the black-box server.';
+    static override subtitle = 'Displays custom banners with the UsrBG API. Request your own at the server below.';
     static override icon = 'ic_profile_24px';
     
     static banners: Banner[] | undefined;

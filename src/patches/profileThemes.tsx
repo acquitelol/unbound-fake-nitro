@@ -41,7 +41,7 @@ const CopyButton = ({ getText }: { getText(): string }) => {
 export default class extends Patch {
     static override key = 'profileThemes';
     static override title = 'Profile Themes';
-    static override subtitle = 'Uses 3y3 encoded text in bios to colorize profiles. Copy your own from the "Profile Theme" section.';
+    static override subtitle = 'Uses 3y3 text to colorize profiles. Copy your own from the "Profile Theme" section.';
     static override icon = 'ic_custom_color';
 
     static colorExpression = /\[(\#[0-9a-fA-F]{6})\s*,\s*(\#[0-9a-fA-F]{6})\]/;
@@ -103,7 +103,7 @@ export default class extends Patch {
 
             Swatches.children?.unshift(<View 
                 style={{ 
-                    marginTop: 16,
+                    marginTop: 5,
                     marginRight: 8
                 }}
             >

@@ -1,10 +1,10 @@
 // Most of this code is referencing https://github.com/colin273/enmity-plugins/blob/master/Freemoji
 // Thanks colin ~!!! <3
-import { metro } from '../common/exports';
+import { Messages, Permission, Uploading, metro } from '../common/exports';
 import { get } from '../common/store';
 import { Patch } from '../common/patch';
 
-const { findByProps, findStore } = metro;
+const { findStore } = metro;
 
 type Emoji = {
     roles: any[],
@@ -26,19 +26,7 @@ type Message = {
     validNonShortcutEmojis: Emoji[];
 }
 
-const [
-    Permission,
-    LazyActionSheet,
-    Messages
-] = findByProps(
-    { params: ['canUseEmojisEverywhere'], lazy: true },
-    { params: ['openLazy', 'hideActionSheet'], lazy: true },
-    { params: ['sendMessage', 'receiveMessage'], lazy: true },
-    { bulk: true }
-);
-
 const SelectedGuildStore = findStore('SelectedGuild');
-const Uploading = findByProps("uploadLocalFiles", { lazy: true });
 
 export default class extends Patch {
     static override key = 'freeEmojis';
@@ -46,7 +34,6 @@ export default class extends Patch {
     static override subtitle = 'Allows you to send any custom or animated emoji as an image/gif link.';
     static override icon = 'ic_emoji_24px';
 
-    static isReacting = false;
     static parseEmojis(message: Message) {
         if (!message || !get(`${this.key}.enabled`)) return;
             
@@ -55,7 +42,7 @@ export default class extends Patch {
                 message.content = message.content.replace(
                     `<${emoji.animated ? 'a' : ''}:${emoji.originalName ?? emoji.name}:${emoji.id}>`,
                     // TODO
-                    emoji.url.replace('webp', 'png').replace(/size=\d+/, 'size=48')
+                    emoji.url.replace('webp', 'png').replace(/size=\d+/, `size=48&quality=lossless&name=${emoji.originalName ?? emoji.name}`)
                 )
 
                 delete message.validNonShortcutEmojis[i];
@@ -66,29 +53,8 @@ export default class extends Patch {
     }
     
     static override patch(Patcher) {
-        console.log({ Permission, LazyActionSheet, Messages, Uploading })
-
-        const patchInstead = (prop: string) => Patcher.instead(Permission, prop, (self, args, orig) => {
-            if (!get(`${this.key}.enabled`)) return orig.apply(self, args);
-
-            return !this.isReacting;
-        })
-
-        patchInstead('canUseEmojisEverywhere');
-        patchInstead('canUseAnimatedEmojis')
-
-        Patcher.before(LazyActionSheet, 'openLazy', (_, [, sheetName, { pickerIntention }]) => {
-            if (!get(`${this.key}.enabled`)) return;
-
-            switch (sheetName) {
-                case 'EmojiPickerActionSheet':
-                    if (pickerIntention !== 0) break;
-                case 'MessageLongPressActionSheet':
-                    this.isReacting = true;
-            }
-        });
-    
-        Patcher.after(LazyActionSheet, 'hideActionSheet', () => get(`${this.key}.enabled`) && (this.isReacting = false));
+        Patcher.instead(Permission, 'canUseEmojisEverywhere', () => true);
+        Patcher.instead(Permission, 'canUseAnimatedEmojis', () => true);
 
         Patcher.before(Messages, 'sendMessage', (_, [, message]: [string, Message]) => this.parseEmojis(message));
         Patcher.before(Uploading, 'uploadLocalFiles', (_, [{ parsedMessage }]: [{ parsedMessage: Message }]) => this.parseEmojis(parsedMessage));
