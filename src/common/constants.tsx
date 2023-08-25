@@ -38,6 +38,7 @@ export const styles = createStyleSheet({
     },
 
     section: {
+        marginTop: -20,
         marginHorizontal: 16,
         shadowColor: '#000',
         shadowOffset: {

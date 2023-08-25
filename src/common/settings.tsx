@@ -33,7 +33,7 @@ export default () => {
     const settings = useSettingsStore(manifest.name);
     const [query, controls] = AdvancedSearch.useAdvancedSearch(searchContext);
 
-    return <View>
+    return <ScrollView>
         <View style={styles.navigation}>
             <View style={styles.shadow}>
                 <AdvancedSearch 
@@ -63,8 +63,7 @@ export default () => {
                 </View>
             </View>
         </View>
-        <ScrollView style={styles.section}>
-            <View style={{ marginTop: -20 }} />
+        <View style={styles.section}>
             {Object.entries(sections).map(([title, { icon, patches }]) => (
                 <ToggleableSection
                     key={title}
@@ -103,7 +102,7 @@ export default () => {
                     </>))}
                 </ToggleableSection>
             ))}
-        </ScrollView>
+        </View>
         <View style={styles.space} />
-    </View>
+    </ScrollView>
 };
