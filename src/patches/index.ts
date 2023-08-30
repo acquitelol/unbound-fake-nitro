@@ -6,6 +6,7 @@ import profileThemes from './profileThemes';
 import customBanner from './customBanner';
 
 import hideUpsells from './hideUpsells';
+import pseudoPatches from './pseudoPatches';
 
 /**
  * TO-DO
@@ -27,6 +28,13 @@ import hideUpsells from './hideUpsells';
         - add client side nitro badge (possibly?)
  */
 export const sections = {
+    client: {
+        icon: 'ic_nitro_rep_24px',
+        patches: {
+            hideUpsells,
+            pseudoPatches
+        }
+    },
     chat: {
         icon: 'img_nitro_star',
         patches: {
@@ -40,12 +48,6 @@ export const sections = {
         patches: {
             profileThemes,
             customBanner
-        }
-    },
-    client: {
-        icon: 'ic_nitro_rep_24px',
-        patches: {
-            hideUpsells
         }
     }
 };

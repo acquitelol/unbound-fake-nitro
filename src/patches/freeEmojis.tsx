@@ -1,6 +1,6 @@
 // Most of this code is referencing https://github.com/colin273/enmity-plugins/blob/master/Freemoji
 // Thanks colin ~!!! <3
-import { Messages, Permission, Uploading, metro } from '../common/exports';
+import { Messages, Uploading, metro } from '../common/exports';
 import { get } from '../common/store';
 import { Patch } from '../common/patch';
 
@@ -35,7 +35,7 @@ export default class extends Patch {
     static override icon = 'ic_emoji_24px';
 
     static parseEmojis(message: Message) {
-        if (!message || !get(`${this.key}.enabled`)) return;
+        if (!message || !message.validNonShortcutEmojis || !get(`${this.key}.enabled`)) return;
             
         message.validNonShortcutEmojis.forEach((emoji: Emoji, i: number) => {
             if (emoji.guildId !== SelectedGuildStore.getGuildId() || emoji.animated) {
@@ -53,17 +53,6 @@ export default class extends Patch {
     }
     
     static override patch(Patcher) {
-        const insteadPatch = (prop: string) => {
-            Patcher.instead(Permission, prop, (self, args, orig) => {
-                if (get(`${this.key}.enabled`)) return orig.apply(self, args);
-        
-                return true
-            })
-        }
-
-        insteadPatch('canUseEmojisEverywhere');
-        insteadPatch('canUseAnimatedEmojis');
-
         Patcher.before(Messages, 'sendMessage', (_, [, message]: [string, Message]) => this.parseEmojis(message));
         Patcher.before(Uploading, 'uploadLocalFiles', (_, [{ parsedMessage }]: [{ parsedMessage: Message }]) => this.parseEmojis(parsedMessage));
     }

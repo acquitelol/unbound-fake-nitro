@@ -105,13 +105,13 @@ export default class extends Patch {
                     continue;
                 }
             
-                const url = `${match[0]}?size=128`;
+                const url = `${match[0]}?size=4096`;
                 const emoji = getCustomEmojiById(match[1]);
             
                 content[i] = {
                     type: "customEmoji",
                     id: match[1],
-                    alt: emoji?.name ?? "<fakenitro>",
+                    alt: emoji?.name ?? "<invalid>",
                     src: url,
                     frozenSrc: url.replace("gif", "webp"),
                     jumboable: jumbo ? true : undefined,

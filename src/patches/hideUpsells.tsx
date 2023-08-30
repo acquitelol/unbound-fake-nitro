@@ -22,7 +22,7 @@ const UpsellCard = findByName("UpsellCard", { interop: false, lazy: true });
 export default class extends Patch {
     static override key = 'hideUpsells';
     static override title = 'Hide Upsells';
-    static override subtitle = 'Hide any and all "Get Nitro" buttons and upsells throughout Discord';
+    static override subtitle = 'Hide all "Get Nitro" upsells throughout Discord (doesn\'t include boosting upsells)';
     static override icon = 'img_nitro_boosted';
 
     static props = [
@@ -65,7 +65,7 @@ export default class extends Patch {
         Patcher.after(Settings, 'default', (_, __, res) => {
 			const { sections } = findInReactTree(res, r => r.sections);
 
-			const section = sections.find(section => section.title === M.ACCOUNT_SETTINGS);
+			const section = sections.find(section => section.settings.includes('PREMIUM'));
 			section && (section.settings = section.settings.filter(setting => setting !== 'PREMIUM'));
 		});
     }
