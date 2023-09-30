@@ -23,7 +23,7 @@ type Banner = {
 export default class self extends Patch {
     static override key = 'customBanner';
     static override title = 'Custom Banner';
-    static override subtitle = 'Displays custom banners with the UsrBG API. Request your own at the server below.';
+    static override subtitle = 'Displays custom banners with the UserBG API. Request your own at the server below.';
     static override icon = 'ic_profile_24px';
     
     static banners: Banner[] | undefined;
@@ -46,7 +46,7 @@ export default class self extends Patch {
     static getBanner(user) {
         const customBanner = this.banners?.find(i => i.uid === user.id);
 
-        return (user?.banner === undefined && customBanner) 
+        return (!user?.banner && customBanner) 
             ? customBanner.img
             : user.banner
     }

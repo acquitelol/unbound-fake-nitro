@@ -1,11 +1,13 @@
 {
     "name": "FakeNitro",
     "id": "rosie.fakenitro",
-	"bundle": "http://rosies-macbook-air.local:5496/bundle.js",
-    "version": "1.0.4",
+    "bundle": "http://rosies-macbook-air.local:5496/bundle.js",
+    "version": "1.0.6",
     "description": "Adds an authentic pseudo-nitro experience to the client, ranging from free emojis to image banners.",
-    "authors": [{
-        "name": "Rosie<3",
-        "id": "588262373488590878"
-    }]
+    "authors": [
+        {
+            "name": "Rosie<3",
+            "id": "588262373488590878"
+        }
+    ]
 }

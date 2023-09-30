@@ -7,6 +7,7 @@ import customBanner from './customBanner';
 
 import hideUpsells from './hideUpsells';
 import pseudoPatches from './pseudoPatches';
+import appIcons from './appIcons';
 
 /**
  * TO-DO
@@ -24,7 +25,7 @@ import pseudoPatches from './pseudoPatches';
     ~ client
         - hide upsells in places throughout the client (get nitro button etc) - done
         - free remixing
-        - free client themes
+        - free client themes - done apparently because pseudoPatches enables them
         - add client side nitro badge (possibly?)
  */
 export const sections = {
@@ -32,7 +33,8 @@ export const sections = {
         icon: 'ic_nitro_rep_24px',
         patches: {
             hideUpsells,
-            pseudoPatches
+            pseudoPatches,
+            appIcons
         }
     },
     chat: {

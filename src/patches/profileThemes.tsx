@@ -1,4 +1,4 @@
-import { React, metro, getIDByName, utilities, View } from '../common/exports';
+import { React, metro, getIDByName, utilities, View, UserStore } from '../common/exports';
 import { get } from '../common/store';
 import { Patch } from '../common/patch';
 
@@ -41,7 +41,7 @@ const CopyButton = ({ getText }: { getText(): string }) => {
 export default class extends Patch {
     static override key = 'profileThemes';
     static override title = 'Profile Themes';
-    static override subtitle = 'Uses 3y3 text to colorize profiles. Copy your own from the "Profile Theme" section.';
+    static override subtitle = 'Uses 3y3 text to colorize profiles. Copy your own from the \'Profile Theme\' section.';
     static override icon = 'ic_custom_color';
 
     static colorExpression = /\[(\#[0-9a-fA-F]{6})\s*,\s*(\#[0-9a-fA-F]{6})\]/;

@@ -16,8 +16,8 @@ type Row = {
     }
 }
 
-const { getCustomEmojiById } = findStore("Emoji");
-const RowManager = findByName("RowManager");
+const { getCustomEmojiById } = findStore('Emoji');
+const RowManager = findByName('RowManager');
 
 export default class extends Patch {
     static override key = 'realEmojis';
@@ -28,7 +28,7 @@ export default class extends Patch {
     static emojiLinkRegex = /https:\/\/cdn.discordapp.com\/emojis\/(\d+)\.\w+/;
 
     static override patch(Patcher) {
-        Patcher.before(RowManager.prototype, "generate", (_, [row]: [Row]) => {
+        Patcher.before(RowManager.prototype, 'generate', (_, [row]: [Row]) => {
             if (row.rowType !== 1 
                 || !row.message?.content 
                 || !get(`${this.key}.enabled`)
@@ -39,11 +39,11 @@ export default class extends Patch {
             let content = row.message.content;
             const emojiLinkRegex = this.emojiLinkRegex;
           
-            if (typeof content !== "string" || !content.match(emojiLinkRegex)) {
+            if (typeof content !== 'string' || !content.match(emojiLinkRegex)) {
                 return;
             }
           
-            let emojis = content.slice(content.match(emojiLinkRegex)?.index).trim().split("\n");
+            let emojis = content.slice(content.match(emojiLinkRegex)?.index).trim().split('\n');
           
             if (!emojis.every(slice => slice.match(emojiLinkRegex))) {
                 return;
@@ -53,19 +53,19 @@ export default class extends Patch {
             content = content.replace(/  /g, () => ` ${emojis.shift()} `).trim();
           
             if (emojis.length) {
-                content += ` ${emojis.join(" ")}`;
+                content += ` ${emojis.join(' ')}`;
             }
           
-            const embeds = row.message.embeds.filter(embed => !(embed.type === "image" && embed.url.match(emojiLinkRegex)));
+            const embeds = row.message.embeds.filter(embed => !(embed.type === 'image' && embed.url.match(emojiLinkRegex)));
           
             row.message.content = content;
             row.message.embeds = embeds;
-            row["__fakenitro"] = true;
+            row['__fakenitro'] = true;
         });
 
-        Patcher.after(RowManager.prototype, "generate", (_, [data], row: Row) => {
+        Patcher.after(RowManager.prototype, 'generate', (_, [data], row: Row) => {
             if (data.rowType !== 1 
-                || !data["__fakenitro"]
+                || !data['__fakenitro']
                 || !Array.isArray(row.message.content)
                 || !get(`${this.key}.enabled`)
             ) {
@@ -81,11 +81,11 @@ export default class extends Patch {
             const emojiLinkRegex = this.emojiLinkRegex;
           
             const jumbo = content.every((c) => {
-                if (c.type === "link" && c.target.match(emojiLinkRegex)) {
+                if (c.type === 'link' && c.target.match(emojiLinkRegex)) {
                     return true;
                 }
 
-                if (c.type === "text" && c.content === " ") {
+                if (c.type === 'text' && c.content === ' ') {
                     return true;
                 }
 
@@ -95,7 +95,7 @@ export default class extends Patch {
             for (let i = 0; i < content.length; i++) {
                 const element = content[i];
             
-                if (element.type !== "link") {
+                if (element.type !== 'link') {
                     continue;
                 }
             
@@ -109,11 +109,11 @@ export default class extends Patch {
                 const emoji = getCustomEmojiById(match[1]);
             
                 content[i] = {
-                    type: "customEmoji",
+                    type: 'customEmoji',
                     id: match[1],
-                    alt: emoji?.name ?? "<invalid>",
+                    alt: emoji?.name ?? '<invalid>',
                     src: url,
-                    frozenSrc: url.replace("gif", "webp"),
+                    frozenSrc: url.replace('gif', 'webp'),
                     jumboable: jumbo ? true : undefined,
                 };
             }
