@@ -1,5 +1,4 @@
 import { Permission } from '../common/exports';
-import { get } from '../common/store';
 import { Patch } from '../common/patch';
 
 export default class extends Patch {
@@ -12,7 +11,7 @@ export default class extends Patch {
         // Unfreezing this object isn't required because Unbound disables Object.freeze on the loader level.
         Object.keys(Permission).forEach(k => {
             k.includes('can') && Patcher.instead(Permission, k, (self, args, orig) => {
-                if (get(`${this.key}.enabled`)) return true;
+                if (this.enabled) return true;
 
                 return orig.apply(self, args);
             })

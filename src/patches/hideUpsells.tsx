@@ -1,6 +1,5 @@
-import { metro, utilities, View } from '../common/exports';
+import { metro, View } from '../common/exports';
 import { Patch } from '../common/patch';
-import { get } from '../common/store';
 
 const { 
     findByName,
@@ -11,8 +10,6 @@ const {
         }
     }
 } = metro;
-
-const { findInReactTree } = utilities;
 
 const ButtonModule = findByProps('ButtonColors', { lazy: true });
 const TextModule = findByProps('TextStyleSheet', { lazy: true });
@@ -33,25 +30,25 @@ export default class extends Patch {
 
     static override patch(Patcher) {
         Patcher.instead(ButtonModule, 'default', (self, args, orig) => {
-            if (args[0].text === M.EMOJI_POPOUT_PREMIUM_CTA && get(`${this.key}.enabled`)) return;
+            if (args[0].text === M.EMOJI_POPOUT_PREMIUM_CTA && this.enabled) return;
 
             return orig.apply(self, args);
         })
 
         Patcher.instead(View, 'render', (self, args, orig) => {
-            if ([M.PREMIUM, 'Nitro'].includes(args[0]?.accessibilityLabel) && get(`${this.key}.enabled`)) return;
+            if ([M.PREMIUM, 'Nitro'].includes(args[0]?.accessibilityLabel) && this.enabled) return;
 
             return orig.apply(self, args);
         })
 
         Patcher.instead(UpsellCard, 'default', (self, args, orig) => {
-            if (get(`${this.key}.enabled`)) return;
+            if (this.enabled) return;
 
             return orig.apply(self, args);
         })
 
         Patcher.before(TextModule.Text, 'render', (_, args) => {
-            if (!get(`${this.key}.enabled`) || typeof args[0].children !== 'string') return;
+            if (!this.enabled || typeof args[0].children !== 'string') return;
 
             this.props.forEach(k => {
                 const original = M[`EMOJI_POPOUT_${k}`];

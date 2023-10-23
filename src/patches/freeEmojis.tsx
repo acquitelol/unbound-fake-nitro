@@ -1,7 +1,6 @@
 // Most of this code is referencing https://github.com/colin273/enmity-plugins/blob/master/Freemoji
 // Thanks colin ~!!! <3
 import { Messages, Uploading, metro } from '../common/exports';
-import { get } from '../common/store';
 import { Patch } from '../common/patch';
 
 const { findStore } = metro;
@@ -35,7 +34,7 @@ export default class extends Patch {
     static override icon = 'ic_emoji_24px';
 
     static parseEmojis(message: Message) {
-        if (!message || !message.validNonShortcutEmojis || !get(`${this.key}.enabled`)) return;
+        if (!message || !message.validNonShortcutEmojis || !this.enabled) return;
             
         message.validNonShortcutEmojis.forEach((emoji: Emoji, i: number) => {
             if (emoji.guildId !== SelectedGuildStore.getGuildId() || emoji.animated) {

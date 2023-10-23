@@ -1,14 +1,23 @@
-import { React } from './exports';
-import type { ReactNode } from 'react';
+import { get, set } from '../common/store';
 
 export abstract class Patch {
     static key: string;
     static title: string;
     static subtitle: string;
-    static icon: string | number;
+    static icon: string;
 
-    static patch(Patcher) {};
-    static render({ disabled }): ReactNode { 
-        return <></> 
-    };
+    static get(key: string, def?: any) {
+        return get(`${this.key}.${key}`) ?? def
+    }
+
+    static set(key: string, value: any) {
+        return set(`${this.key}.${key}`, value);
+    }
+
+    static get enabled() {
+        return this.get('enabled');
+    }
+
+    static patch(Patcher) { };
+    static render({ disabled }) { };
 }

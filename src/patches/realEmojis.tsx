@@ -1,6 +1,5 @@
-// This code references https://github.com/redstonekasi/vendetta-plugins/tree/main/plugins/realmoji
+// This code roughly references https://github.com/redstonekasi/vendetta-plugins/tree/main/plugins/realmoji
 import { metro } from '../common/exports';
-import { get } from '../common/store';
 import { Patch } from '../common/patch';
 
 const { 
@@ -31,7 +30,7 @@ export default class extends Patch {
         Patcher.before(RowManager.prototype, 'generate', (_, [row]: [Row]) => {
             if (row.rowType !== 1 
                 || !row.message?.content 
-                || !get(`${this.key}.enabled`)
+                || !this.enabled
             ) {
                 return;
             }
@@ -67,7 +66,7 @@ export default class extends Patch {
             if (data.rowType !== 1 
                 || !data['__fakenitro']
                 || !Array.isArray(row.message.content)
-                || !get(`${this.key}.enabled`)
+                || !this.enabled
             ) {
                 return;
             }

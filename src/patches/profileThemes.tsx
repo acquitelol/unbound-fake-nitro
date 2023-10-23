@@ -1,5 +1,4 @@
-import { React, metro, getIDByName, utilities, View, UserStore } from '../common/exports';
-import { get } from '../common/store';
+import { React, metro, getIDByName, utilities, View } from '../common/exports';
 import { Patch } from '../common/patch';
 
 const { 
@@ -73,7 +72,7 @@ export default class extends Patch {
     
     static override patch(Patcher) {
         Patcher.after(UserProfileStore, 'getUserProfile', (_, __, res) => {
-            if (!res || !this.is3y3(res.bio) || !get(`${this.key}.enabled`)) return;
+            if (!res || !this.is3y3(res.bio) || !this.enabled) return;
 
             const decodedColors = this.decode(res.bio);
             const colors = decodedColors.match(this.colorExpression);
@@ -88,7 +87,7 @@ export default class extends Patch {
         })
 
         Patcher.after(EditProfileTheme, 'default', (_, __, res) => {
-            if (!get(`${this.key}.enabled`)) return;
+            if (!this.enabled) return;
 
             const Swatches = findInReactTree(res, r => r?.children.find(i => i?.type?.name === 'ColorSwatch'));
 

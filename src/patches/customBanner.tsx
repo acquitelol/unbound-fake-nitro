@@ -1,5 +1,4 @@
 import { getIDByName, metro, React, View } from '../common/exports';
-import { get } from '../common/store';
 import { Patch } from '../common/patch';
 import { userBGConstants } from '../common/constants';
 
@@ -53,7 +52,7 @@ export default class self extends Patch {
 
     static override patch(Patcher) {
         Patcher.after(UserBanner, 'getUserBannerURL', (_, [user]) => {
-            if (!get(`${this.key}.enabled`)) return user.banner;
+            if (!this.enabled) return user.banner;
 
             if (!this.banners) {
                 this.fetchBanners();
