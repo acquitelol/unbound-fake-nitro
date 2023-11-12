@@ -12,7 +12,7 @@ import {
     utilities,
     components
 } from './exports';
-import { ToggleableSection, buttons, styles } from './constants';
+import { ToggleableSection, buttons, useStyles } from './constants';
 import manifest from '../../dist/manifest.json';
 
 const {
@@ -32,6 +32,7 @@ const searchContext = { type: 'FAKE_NITRO' };
 export default () => {
     const settings = useSettingsStore(manifest.name);
     const [query, controls] = AdvancedSearch.useAdvancedSearch(searchContext);
+    const styles = useStyles();
 
     return <ScrollView>
         <View style={styles.navigation}>

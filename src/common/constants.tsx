@@ -15,11 +15,11 @@ const {
     }
 } = metro;
 
-const createStyleSheet = <T extends Record<string, ViewStyle>>(obj: T): T => {
-    return StyleSheet.createThemedStyleSheet(obj);
+const createStyles = <T extends Record<string, ViewStyle>>(obj: T): () => T => {
+    return StyleSheet.createStyles(obj);
 }
 
-export const styles = createStyleSheet({
+export const useStyles = createStyles({
     navigation: {
         paddingHorizontal: 16,
         paddingBottom: 16,
@@ -89,6 +89,7 @@ export const ToggleableSection = ({ title, icon, patches, children, style, ...re
     const [hidden, setHidden] = React.useState(get(`${title}.hidden`, false));
     const disabled = Object.keys(patches).every(key => !get(`${key}.enabled`));
     const settings = useSettingsStore(manifest.name);
+    const styles = useStyles();
 
     React.useEffect(() => {
         settings.set(`${title}.hidden`, hidden);
