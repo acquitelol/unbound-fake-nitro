@@ -10,7 +10,8 @@ import {
     metro,
     useSettingsStore,
     utilities,
-    components
+    components,
+    ReactNative
 } from './exports';
 import { ToggleableSection, buttons, useStyles } from './constants';
 import manifest from '../../dist/manifest.json';
@@ -26,20 +27,30 @@ const {
     }
 } = metro;
 
-const { AdvancedSearch } = components;
-const searchContext = { type: 'FAKE_NITRO' };
+const { Search } = components;
 
 export default () => {
     const settings = useSettingsStore(manifest.name);
-    const [query, controls] = AdvancedSearch.useAdvancedSearch(searchContext);
+    const [search, setSearch] = React.useState('');
     const styles = useStyles();
 
     return <ScrollView>
         <View style={styles.navigation}>
-            <View style={styles.shadow}>
-                <AdvancedSearch 
-                    searchContext={searchContext}
-                    controls={controls}
+            <View style={[styles.shadow, { marginTop: 16 }]}>
+                <Search 
+                    placeholder={'Search...'}
+                    value={search}
+                    onChange={(e: any) => setSearch(e)}
+                    onClear={() => setSearch('')}
+                    isClearable
+                    leadingIcon={() => {
+                        return <ReactNative.View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <ReactNative.Image
+                                source={getIDByName('Search')}
+                                style={styles.icon}
+                            />
+                        </ReactNative.View>;
+                    }}
                 />
             </View>
             <View style={styles.shadow}>
@@ -77,7 +88,7 @@ export default () => {
                 >
                     {Object.values(patches).filter(({ title, subtitle }) => {
                         return [title, subtitle]
-                            .some(x => x.toLowerCase().includes(query.toLowerCase()))
+                            .some(x => x.toLowerCase().includes(search.toLowerCase()))
                     }).map(({ key, title, subtitle, icon, render: Render }, index, array) => (<>
                         <View style={get(`${key}.enabled`) ? {} : { opacity: 0.5 }}>
                             <TableSwitchRow 

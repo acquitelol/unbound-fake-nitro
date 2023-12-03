@@ -2,7 +2,7 @@
     "name": "FakeNitro",
     "id": "rosie.fakenitro",
     "bundle": "http://rosies-macbook-air.local:5496/bundle.js",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "icon": "ic_nitro_rep_24px",
     "description": "Adds an authentic pseudo-nitro experience to the client, ranging from free emojis to image banners.",
     "authors": [

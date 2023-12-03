@@ -13,7 +13,7 @@ const {
 
 const ButtonModule = findByProps('ButtonColors', { lazy: true });
 const TextModule = findByProps('TextStyleSheet', { lazy: true });
-const Settings = findByName('SearchableSettingsList', { lazy: true });
+const Settings = findByProps('SearchableSettingsList', { lazy: true });
 const UpsellCard = findByName('UpsellCard', { interop: false, lazy: true });
 
 export default class extends Patch {
@@ -60,7 +60,7 @@ export default class extends Patch {
         })
 
         Patcher.before(Settings.SearchableSettingsList, 'type', (_, [{ sections }]) => {
-			const section = sections.find(section => section.settings.includes('PREMIUM'));
+			const section = sections.find(section => section.settings.find(setting => setting === 'PREMIUM'));
 			section && (section.settings = section.settings.filter(setting => setting !== 'PREMIUM'));
 		});
     }

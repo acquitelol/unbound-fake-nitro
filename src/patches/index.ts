@@ -36,7 +36,7 @@ export const sections = {
         }
     },
     chat: {
-        icon: 'img_nitro_star',
+        icon: 'feature_star',
         patches: {
             freeEmojis,
             realEmojis,

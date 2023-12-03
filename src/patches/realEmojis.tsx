@@ -22,7 +22,7 @@ export default class extends Patch {
     static override key = 'realEmojis';
     static override title = 'Real Emojis';
     static override subtitle = 'Formats fake nitro emoji links into real emojis by parsing the links when rendering the chat.';
-    static override icon = 'ic_double_down_arrow';
+    static override icon = 'ArrowsUpDownIcon';
 
     static emojiLinkRegex = /https:\/\/cdn.discordapp.com\/emojis\/(\d+)\.\w+/;
 
