@@ -8,6 +8,11 @@ const {
         i18n: {
             Messages: M
         }
+    },
+    components: {
+        Redesign: {
+            Button
+        }
     }
 } = metro;
 
@@ -15,6 +20,7 @@ const ButtonModule = findByProps('ButtonColors', { lazy: true });
 const TextModule = findByProps('TextStyleSheet', { lazy: true });
 const Settings = findByProps('SearchableSettingsList', { lazy: true });
 const UpsellCard = findByName('UpsellCard', { interop: false, lazy: true });
+const Upsell = findByProps('TryItOutUpsellCard', { lazy: true });
 
 export default class extends Patch {
     static override key = 'hideUpsells';
@@ -30,7 +36,7 @@ export default class extends Patch {
 
     static override patch(Patcher) {
         Patcher.instead(ButtonModule, 'default', (self, args, orig) => {
-            if (args[0].text === M.EMOJI_POPOUT_PREMIUM_CTA && this.enabled) return;
+            if ([M.APP_ICON_UPSELL, M.EMOJI_POPOUT_PREMIUM_CTA].includes(args[0].text) && this.enabled) return;
 
             return orig.apply(self, args);
         })
@@ -42,6 +48,12 @@ export default class extends Patch {
         })
 
         Patcher.instead(UpsellCard, 'default', (self, args, orig) => {
+            if (this.enabled) return;
+
+            return orig.apply(self, args);
+        })
+
+        Patcher.instead(Upsell, 'TryItOutUpsellCard', (self, args, orig) => {
             if (this.enabled) return;
 
             return orig.apply(self, args);

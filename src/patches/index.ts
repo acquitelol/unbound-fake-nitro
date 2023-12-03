@@ -7,6 +7,7 @@ import customBanner from './customBanner';
 
 import hideUpsells from './hideUpsells';
 import pseudoPatches from './pseudoPatches';
+import appIcons from './appIcons';
 
 /**
  * TO-DO
@@ -32,7 +33,8 @@ export const sections = {
         icon: 'ic_nitro_rep_24px',
         patches: {
             hideUpsells,
-            pseudoPatches
+            pseudoPatches,
+            appIcons
         }
     },
     chat: {
