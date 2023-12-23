@@ -8,7 +8,7 @@ const alternateIcons = IconModule.OFFICIAL_ALTERNATE_ICONS()
 export default class extends Patch {
     static override key = 'appIcons';
     static override title = 'App Icons';
-    static override subtitle = 'Enables Discord\'s fancy custom \'App Icons\' without needing nitro';
+    static override subtitle = 'Enables Discord\'s fancy custom \'App Icons\' without needing nitro.';
     static override icon = 'Discord';
 
     static override patch() {

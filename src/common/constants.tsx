@@ -1,4 +1,4 @@
-import { React, TouchableOpacity, View, configureNext, create, getIDByName, metro, useSettingsStore, utilities } from './exports';
+import { Forms, React, TouchableOpacity, View, configureNext, create, getIDByName, metro, useSettingsStore, utilities } from './exports';
 import { get } from './store';
 import manifest from '../../dist/manifest.json';
 
@@ -9,9 +9,6 @@ const {
     common: {
         StyleSheet,
         Theme
-    },
-    components: {
-        Forms
     }
 } = metro;
 

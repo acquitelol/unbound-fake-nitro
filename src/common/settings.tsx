@@ -11,19 +11,19 @@ import {
     useSettingsStore,
     utilities,
     components,
-    ReactNative
+    ReactNative,
+    Forms
 } from './exports';
 import { ToggleableSection, buttons, useStyles } from './constants';
 import manifest from '../../dist/manifest.json';
 
 const {
     components: {
-        Forms,
         Redesign: {
             TableSwitchRow,
-            TableRowIcon
-        },
-        Button
+            TableRowIcon,
+            Button
+        }
     }
 } = metro;
 
@@ -57,9 +57,9 @@ export default () => {
                 <View style={{ flexDirection: 'row' }}>
                     {buttons.map(({ title, value }, _, { length }) => {
                         return <Button
-                            color={Button.Colors.BRAND}
                             text={title}
-                            size={Button.Sizes.MEDIUM}
+                            variant={'primary'}
+                            size={'md'}
                             onPress={() => {
                                 setAll(settings, sections, value);
                                 configureNext(create(300, 'keyboard'))
