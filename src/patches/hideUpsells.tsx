@@ -4,14 +4,9 @@ import { Patch } from '../common/patch';
 const { 
     findByName,
     findByProps,
-    common: {
+    Common: {
         i18n: {
             Messages: M
-        }
-    },
-    components: {
-        Redesign: {
-            Button
         }
     }
 } = metro;

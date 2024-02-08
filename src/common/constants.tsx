@@ -6,7 +6,7 @@ import type { ReactNode } from 'react';
 import type { ViewStyle } from 'react-native'
 
 const {
-    common: {
+    Common: {
         StyleSheet,
         Theme
     }

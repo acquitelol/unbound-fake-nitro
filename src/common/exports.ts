@@ -1,7 +1,6 @@
 export const {
     utilities,
     metro,
-    components,
     assets: {
         getIDByName
     },
@@ -16,7 +15,7 @@ export const {
     }
 } = window['unbound'];
 
-export const UserStore = metro.stores.Users;
+export const UserStore = metro.Stores.Users;
 export const ReactNative: typeof import('react-native') = window['ReactNative']
 export const React: typeof import('react') = window['React'];
 
