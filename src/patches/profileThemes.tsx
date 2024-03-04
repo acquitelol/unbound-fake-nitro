@@ -4,10 +4,10 @@ import { Patch } from '../common/patch';
 const { 
     findByName, 
     findStore, 
-    Common: {
+    common: {
         Clipboard 
     },
-    Components: {
+    components: {
         Redesign
     }
 } = metro;

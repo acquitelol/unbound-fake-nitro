@@ -4,7 +4,7 @@ import { Patch } from '../common/patch';
 const { 
     findByName,
     findByProps,
-    Common: {
+    common: {
         i18n: {
             Messages: M
         }

@@ -4,7 +4,7 @@ import { userBGConstants } from '../common/constants';
 
 const { 
     findByProps, 
-    Components: { 
+    components: { 
         Redesign 
     } 
 } = metro;

@@ -25,7 +25,7 @@ type Message = {
     validNonShortcutEmojis: Emoji[];
 }
 
-const SelectedGuildStore = findStore('SelectedGuild');
+const SelectedGuildStore = findStore('SelectedGuild', { lazy: true });
 
 export default class extends Patch {
     static override key = 'freeEmojis';

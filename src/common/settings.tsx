@@ -11,13 +11,14 @@ import {
     useSettingsStore,
     utilities,
     ReactNative,
-    Forms
+    Forms,
+    components
 } from './exports';
 import { ToggleableSection, buttons, useStyles } from './constants';
 import manifest from '../../dist/manifest.json';
 
 const {
-    Components: {
+    components: {
         Redesign: {
             TableSwitchRow,
             TableRowIcon,
@@ -26,7 +27,7 @@ const {
     }
 } = metro;
 
-const { Search } = metro.Custom;
+const { Search } = components;
 
 export default () => {
     const settings = useSettingsStore(manifest.name);
